@@ -81,6 +81,7 @@ def checkServers():
         serverCount = buildCountList()
 
         dif = checkDif(serverCount,lastServerCount)
+        playerChanges(serverCount,lastServerCount)
         alertChange(dif)
         
 
