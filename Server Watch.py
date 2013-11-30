@@ -64,9 +64,7 @@ def checkDif(serverCountOld, serverCountNew):
     while(count < 3):
         serverChange[count] = serverCountNew[count]-serverCountOld[count]
         count += 1
-    #print 'done'
-    
-    #print serverChange
+
     count = 0
     count2 = 0
     while(count < 3):
@@ -74,7 +72,7 @@ def checkDif(serverCountOld, serverCountNew):
             if abs(serverChange[count]) >= 3 and abs(serverChange[count2]) >= 3:
                 if (abs(serverChange[count]-serverChange[count2])/2) >= tollerence:
                     report.append([serverChange.index(serverChange[count]), serverChange.index(serverChange[count2]), abs(serverChange[count]-serverChange[count2])/2])
-                    #print report
+
             count2 += 1
         count += 1
         count2 = count
