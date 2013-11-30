@@ -44,11 +44,12 @@ def buildCountList():
     return serverCount
 
 def checkServers():
+    print 'Starting Server Watch'
     lastServerCount = buildCountList()
     serverCount = lastServerCount
     while(True):
         timeTillNextUpdate = time.localtime()[4]%5
-        print 'sleeping for ' + str(timeTillNextUpdate)
+        print 'Next update in ' + str(timeTillNextUpdate) + ' minutes'
         time.sleep((timeTillNextUpdate*60)+15)
         lastServerCount = serverCount
         serverCount = buildCountList()
@@ -95,4 +96,4 @@ def alertChange(reports):
     playSound('beep')
 
 
-#checkServers()
+checkServers()
