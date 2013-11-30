@@ -14,7 +14,7 @@ v2 = [52, 48, 58, 32]
 def main():
     update.checkForUpdate()
     print '- Server Watch -'
-    print 'Version 1.01'
+    print 'Version 1.05'
     print
     print 'Commands:'
     print 'playerCounts() - Prints out how many people are on each server'
@@ -32,7 +32,7 @@ def playerCounts():
 
 def playerChanges(old, new):
     print servers[0][0] + ' -  ' + str(old[0]) + ' to ' + str(new[0])
-    print servers[1][0] + ' -    ' + str(old[1]) + ' to ' + str(new[1])
+    print servers[1][0] + ' -   ' + str(old[1]) + ' to ' + str(new[1])
     print servers[2][0] + ' - ' + str(old[2]) + ' to ' + str(new[2])
     print servers[3][0] + ' -  ' + str(old[3]) + ' to ' + str(new[3])
     
@@ -81,7 +81,9 @@ def checkServers():
         serverCount = buildCountList()
 
         dif = checkDif(serverCount,lastServerCount)
-        playerChanges(serverCount,lastServerCount)
+        if dif != []:
+            playerChanges(serverCount,lastServerCount)
+            
         alertChange(dif)
         
 
