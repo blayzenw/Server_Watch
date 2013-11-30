@@ -14,7 +14,7 @@ v2 = [52, 48, 58, 32]
 def main():
     update.checkForUpdate()
     print '- Server Watch -'
-    print 'Version 1.05'
+    print 'Version 1.06'
     print
     print 'Commands:'
     print 'playerCounts() - Prints out how many people are on each server'
@@ -32,7 +32,7 @@ def playerCounts():
 
 def playerChanges(old, new):
     print servers[0][0] + ' -  ' + str(old[0]) + ' to ' + str(new[0])
-    print servers[1][0] + ' -   ' + str(old[1]) + ' to ' + str(new[1])
+    print servers[1][0] + ' -    ' + str(old[1]) + ' to ' + str(new[1])
     print servers[2][0] + ' - ' + str(old[2]) + ' to ' + str(new[2])
     print servers[3][0] + ' -  ' + str(old[3]) + ' to ' + str(new[3])
     
@@ -81,9 +81,6 @@ def checkServers():
         serverCount = buildCountList()
 
         dif = checkDif(serverCount,lastServerCount)
-        if dif != []:
-            playerChanges(serverCount,lastServerCount)
-            
         alertChange(dif)
         
 
@@ -95,18 +92,19 @@ def checkDif(serverCountOld, serverCountNew):
         serverChange[count] = serverCountNew[count]-serverCountOld[count]
         count += 1
 
-    count = 0
-    count2 = 0
-    while(count < 3):
-        while(count2 < 3):
-            if abs(serverChange[count]) >= 3 and abs(serverChange[count2]) >= 3:
-                if (abs(serverChange[count]-serverChange[count2])/2) >= tollerence:
-                    report.append([serverChange.index(serverChange[count]), serverChange.index(serverChange[count2]), abs(serverChange[count]-serverChange[count2])/2])
+    dts = (abs(serverChange[0]-serverChange[3]))/2
+    sts = (abs(serverChange[1]-serverChange[3]))/2
+    ats = (abs(serverChange[2]-serverChange[3]))/2
 
-            count2 += 1
-        count += 1
-        count2 = count
-
+    if dts >= tollerence:
+        report.append([0,3,dts])
+        
+    if dts >= tollerence:
+        report.append([1,3,sts])
+        
+    if dts >= tollerence:
+        report.append([2,3,ats])
+        
     return report
 
 
@@ -126,4 +124,3 @@ def alertChange(reports):
 
 
 main()
-
