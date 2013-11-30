@@ -3,14 +3,16 @@ import urllib2
 import winsound, sys
 import time
 import threading
+import update
 
 tollerence = 3
-servers = [['Desertion','http://freedom001.game.wurmonline.com:8080/mrtg/wurm.html'],['Serenity','http://freedom002.game.wurmonline.com:8080/mrtg/wurm.html'],['Affliction','http://freedom002.game.wurmonline.com:8080/mrtg/wurm.html'],['Elevation','http://wild001.game.wurmonline.com:8080/mrtg/wurm.html']]
+servers = [['Desertion','http://freedom001.game.wurmonline.com:8080/mrtg/wurm.html'],['Serenity','http://freedom002.game.wurmonline.com:8080/mrtg/wurm.html'],['Affliction','http://freedom003.game.wurmonline.com:8080/mrtg/wurm.html'],['Elevation','http://wild001.game.wurmonline.com:8080/mrtg/wurm.html']]
 
 v = [42, 58, 58, 32]
 v2 = [52, 48, 58, 32]
 
 def main():
+    #update.checkForUpdate()
     print '- Server Watch -'
     print 'Version 1.01'
     print
@@ -27,6 +29,13 @@ def playerCounts():
     print servers[1][0] + ' - ' + str(players[1])
     print servers[2][0] + ' - ' + str(players[2])
     print servers[3][0] + ' - ' + str(players[3])
+
+def playerChanges(old, new):
+    print servers[0][0] + ' -  ' + str(old[0]) + ' to ' + str(new[0])
+    print servers[1][0] + ' -    ' + str(old[1]) + ' to ' + str(new[1])
+    print servers[2][0] + ' - ' + str(old[2]) + ' to ' + str(new[2])
+    print servers[3][0] + ' -  ' + str(old[3]) + ' to ' + str(new[3])
+    
 
 def playSound(sound):
     winsound.PlaySound('%s.wav' % sound, winsound.SND_FILENAME)
@@ -73,6 +82,7 @@ def checkServers():
 
         dif = checkDif(serverCount,lastServerCount)
         alertChange(dif)
+        
 
 def checkDif(serverCountOld, serverCountNew):
     report = []
@@ -107,7 +117,7 @@ def alertChange(reports):
         playerChange = report[2]
 
         print str(time.localtime()[3]) + ':' + str(time.localtime()[4]) + ' - ' + 'There was a change of ' + str(playerChange) + ' players from ' + str(server2) + ' to ' + str(server1)
-
+        
         
     playSound('beep')
 

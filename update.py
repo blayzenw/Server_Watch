@@ -4,7 +4,7 @@ import zipfile
 versionURL = 'https://raw.github.com/blayzenw/Server_Watch/master/server%20watch.info'
 paylaodURL = 'https://github.com/blayzenw/Server_Watch/raw/master/Server%20Watch.zip'
 
-def getCurrentVersion():
+def checkForUpdate():
     page = urllib2.urlopen(versionURL)
     pageSource = page.read()
     newVersion = parseVersion(pageSource)
