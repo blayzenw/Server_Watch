@@ -18,7 +18,7 @@ def checkForUpdate():
         extractPayload()
 
 def parseVersion(text):
-    return int(text.split('=')[1])
+    return float(text.split('=')[1])
 
 def downloadNewVersion():
     page = urllib2.urlopen(paylaodURL)
