@@ -2,12 +2,31 @@ from BeautifulSoup import BeautifulSoup
 import urllib2
 import winsound, sys
 import time
+import threading
 
 tollerence = 3
 servers = [['Desertion','http://freedom001.game.wurmonline.com:8080/mrtg/wurm.html'],['Serenity','http://freedom002.game.wurmonline.com:8080/mrtg/wurm.html'],['Affliction','http://freedom002.game.wurmonline.com:8080/mrtg/wurm.html'],['Elevation','http://wild001.game.wurmonline.com:8080/mrtg/wurm.html']]
 
 v = [42, 58, 58, 32]
 v2 = [52, 48, 58, 32]
+
+def main():
+    print '- Server Watch -'
+    print 'Version 1.01'
+    print
+    print 'Commands:'
+    print 'playerCounts() - Prints out how many people are on each server'
+    print
+    serverCheck = threading.Thread(target=checkServers)
+    serverCheck.start()
+
+def playerCounts():
+    players = buildCountList()
+    print 'Current time - ' + str(time.localtime()[3]) + ':' + str(time.localtime()[4])
+    print servers[0][0] + ' - ' + str(players[0])
+    print servers[1][0] + ' - ' + str(players[1])
+    print servers[2][0] + ' - ' + str(players[2])
+    print servers[3][0] + ' - ' + str(players[3])
 
 def playSound(sound):
     winsound.PlaySound('%s.wav' % sound, winsound.SND_FILENAME)
@@ -44,13 +63,11 @@ def buildCountList():
     return serverCount
 
 def checkServers():
-    print 'Starting Server Watch'
+    print '--Background server watch initiated--'
     lastServerCount = buildCountList()
     serverCount = lastServerCount
     while(True):
-        timeTillNextUpdate = time.localtime()[4]%5
-        print 'Next update in ' + str(timeTillNextUpdate) + ' minutes'
-        time.sleep((timeTillNextUpdate*60)+15)
+        time.sleep(30)
         lastServerCount = serverCount
         serverCount = buildCountList()
 
@@ -79,6 +96,7 @@ def checkDif(serverCountOld, serverCountNew):
 
     return report
 
+
 def alertChange(reports):
     if(reports == []):
         return
@@ -88,10 +106,10 @@ def alertChange(reports):
         server2 = servers[report[1]][0]
         playerChange = report[2]
 
-        print 'There was a change of ' + str(playerChange) + ' players from ' + str(server1) + ' to ' + str(server2)
+        print str(time.localtime()[3]) + ':' + str(time.localtime()[4]) + ' - ' + 'There was a change of ' + str(playerChange) + ' players from ' + str(server2) + ' to ' + str(server1)
 
         
     playSound('beep')
 
 
-checkServers()
+main()
