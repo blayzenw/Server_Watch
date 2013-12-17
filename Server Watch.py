@@ -15,10 +15,10 @@ v2 = [52, 48, 58, 32]
 
 def main():
     isUpdated = update.checkForUpdate()
-    if(isUpdated){
+    if(isUpdated):
         execfile(filename)
         exit
-    }
+    
     print '- Server Watch -'
     print 'Version 1.08'
     print
