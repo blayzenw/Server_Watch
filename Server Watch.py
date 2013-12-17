@@ -5,6 +5,7 @@ import time
 import threading
 import update
 
+filename = 'Server Watch.py';
 tollerence = 3
 jumpTollerence = 3
 servers = [['Desertion','http://freedom001.game.wurmonline.com:8080/mrtg/wurm.html'],['Serenity','http://freedom002.game.wurmonline.com:8080/mrtg/wurm.html'],['Affliction','http://freedom003.game.wurmonline.com:8080/mrtg/wurm.html'],['Elevation','http://wild001.game.wurmonline.com:8080/mrtg/wurm.html']]
@@ -13,7 +14,11 @@ v = [42, 58, 58, 32]
 v2 = [52, 48, 58, 32]
 
 def main():
-    update.checkForUpdate()
+    isUpdated = update.checkForUpdate()
+    if(isUpdated){
+        execfile(filename)
+        exit
+    }
     print '- Server Watch -'
     print 'Version 1.08'
     print

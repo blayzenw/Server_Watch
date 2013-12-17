@@ -17,6 +17,8 @@ def checkForUpdate():
         print 'Updating...'
         downloadNewVersion()
         extractPayload()
+        return True
+    return False
 
 def parseVersion(text):
     return float(text.split('=')[1])
