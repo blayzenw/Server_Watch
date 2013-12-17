@@ -134,4 +134,4 @@ def alertChange(reports):
         
     playSound('beep')
 
-
+main()
