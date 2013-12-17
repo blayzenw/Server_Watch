@@ -4,6 +4,7 @@ import winsound, sys
 import time
 import threading
 import update
+import sys
 
 filename = 'Server Watch.py';
 tollerence = 3
@@ -17,8 +18,7 @@ def main():
     isUpdated = update.checkForUpdate()
     if(isUpdated):
         execfile(filename)
-        exit
-    
+        sys.exit()
     print '- Server Watch -'
     print 'Version 1.08'
     print

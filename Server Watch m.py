@@ -17,7 +17,7 @@ def main():
     isUpdated = update.checkForUpdate()
     if(isUpdated):
         execfile(filename)
-        exit
+        sys.exit()
     
     print '- Server Watch -'
     print 'Version 1.08'
