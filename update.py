@@ -14,6 +14,7 @@ def checkForUpdate():
     currentVersion = parseVersion(cv)
 
     if(newVersion != currentVersion):
+        print 'Updating...'
         downloadNewVersion()
         extractPayload()
 

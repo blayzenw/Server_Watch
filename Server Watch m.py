@@ -6,6 +6,7 @@ import threading
 import update
 
 tollerence = 3
+jumpTollerence = 3
 servers = [['Desertion','http://freedom001.game.wurmonline.com:8080/mrtg/wurm.html'],['Serenity','http://freedom002.game.wurmonline.com:8080/mrtg/wurm.html'],['Affliction','http://freedom003.game.wurmonline.com:8080/mrtg/wurm.html'],['Elevation','http://wild001.game.wurmonline.com:8080/mrtg/wurm.html']]
 
 v = [42, 58, 58, 32]
@@ -14,7 +15,7 @@ v2 = [52, 48, 58, 32]
 def main():
     update.checkForUpdate()
     print '- Server Watch -'
-    print 'Version 1.06'
+    print 'Version 1.08'
     print
     print 'Commands:'
     print 'playerCounts() - Prints out how many people are on each server'
@@ -58,7 +59,6 @@ def grabPlayers(url):
     while(playerStr[count] != ' '):
         count += 1
     playerStr = playerStr[0:count]
-
     #Convert it to an int
     playerInt = int(playerStr)
     return playerInt
@@ -86,24 +86,36 @@ def checkServers():
 
 def checkDif(serverCountOld, serverCountNew):
     report = []
-    serverChange = [0,0,0]
+    serverChange = [0,0,0,0]
     count = 0
-    while(count < 3):
+    while(count < 4):
         serverChange[count] = serverCountNew[count]-serverCountOld[count]
         count += 1
-
+    print serverChange
     dts = (abs(serverChange[0]-serverChange[3]))/2
     sts = (abs(serverChange[1]-serverChange[3]))/2
     ats = (abs(serverChange[2]-serverChange[3]))/2
-
+    
     if dts >= tollerence:
-        report.append([0,3,dts])
+        if abs(serverChange[0]) >= jumpTollerence and abs(serverChange[3]) >= jumpTollerence:
+            if serverChange[0]-serverChange[3] > 0:
+                report.append([0,3,dts])
+            else:
+                report.append([3,0,dts])
         
     if dts >= tollerence:
-        report.append([1,3,sts])
+        if abs(serverChange[1]) >= jumpTollerence and abs(serverChange[3]) >= jumpTollerence:
+            if serverChange[0]-serverChange[3] > 0:
+                report.append([1,3,dts])
+            else:
+                report.append([3,1,dts])
         
     if dts >= tollerence:
-        report.append([2,3,ats])
+        if abs(serverChange[2]) >= jumpTollerence and abs(serverChange[3]) >= jumpTollerence:
+            if serverChange[0]-serverChange[3] > 0:
+                report.append([2,3,dts])
+            else:
+                report.append([3,2,dts])
         
     return report
 
@@ -121,6 +133,5 @@ def alertChange(reports):
         
         
     playSound('beep')
-
 
 main()
